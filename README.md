@@ -1,4 +1,4 @@
-# ComfyUI Moyin Creator Nodes
+# ComfyUI  Creator Nodes
 
 漫剧短剧 ComfyUI 自定义节点。
 
