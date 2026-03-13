@@ -1,6 +1,6 @@
 # ComfyUI Moyin Creator Nodes
 
-将魔因漫创 (Moyin Creator) 的核心功能转换为 ComfyUI 自定义节点。
+漫剧短剧 ComfyUI 自定义节点。
 
 ## 功能特性
 
