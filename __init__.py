@@ -1,37 +1,27 @@
 import os
 import sys
+import importlib.util
 
-# 添加当前目录到系统路径，确保可以导入本地的 nodes 模块
-yan_dir = os.path.dirname(os.path.abspath(__file__))
-if yan_dir not in sys.path:
-    sys.path.insert(0, yan_dir)
+# 获取当前目录的绝对路径
+node_dir = os.path.dirname(os.path.abspath(__file__))
 
-try:
-    from nodes import (
-        MoyinCreateCharacter,
-        MoyinCharacterToPrompt,
-        MoyinCreateScene,
-        MoyinBuildImagePrompt,
-        MoyinBuildVideoPrompt,
-        MoyinBuildNegativePrompt,
-        MoyinCombineScenes,
-        MoyinCreateScreenplay,
-        MoyinSceneToImagePrompt,
-        MoyinAPIConfig,
-    )
-except ImportError:
-    # 直接导入，不使用相对路径
-    import nodes
-    MoyinCreateCharacter = nodes.MoyinCreateCharacter
-    MoyinCharacterToPrompt = nodes.MoyinCharacterToPrompt
-    MoyinCreateScene = nodes.MoyinCreateScene
-    MoyinBuildImagePrompt = nodes.MoyinBuildImagePrompt
-    MoyinBuildVideoPrompt = nodes.MoyinBuildVideoPrompt
-    MoyinBuildNegativePrompt = nodes.MoyinBuildNegativePrompt
-    MoyinCombineScenes = nodes.MoyinCombineScenes
-    MoyinCreateScreenplay = nodes.MoyinCreateScreenplay
-    MoyinSceneToImagePrompt = nodes.MoyinSceneToImagePrompt
-    MoyinAPIConfig = nodes.MoyinAPIConfig
+# 直接从文件路径导入 nodes 模块
+nodes_path = os.path.join(node_dir, 'nodes.py')
+spec = importlib.util.spec_from_file_location('yan_nodes', nodes_path)
+yan_nodes = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(yan_nodes)
+
+# 从导入的模块中获取所有节点类
+MoyinCreateCharacter = yan_nodes.MoyinCreateCharacter
+MoyinCharacterToPrompt = yan_nodes.MoyinCharacterToPrompt
+MoyinCreateScene = yan_nodes.MoyinCreateScene
+MoyinBuildImagePrompt = yan_nodes.MoyinBuildImagePrompt
+MoyinBuildVideoPrompt = yan_nodes.MoyinBuildVideoPrompt
+MoyinBuildNegativePrompt = yan_nodes.MoyinBuildNegativePrompt
+MoyinCombineScenes = yan_nodes.MoyinCombineScenes
+MoyinCreateScreenplay = yan_nodes.MoyinCreateScreenplay
+MoyinSceneToImagePrompt = yan_nodes.MoyinSceneToImagePrompt
+MoyinAPIConfig = yan_nodes.MoyinAPIConfig
 
 NODE_CLASS_MAPPINGS = {
     "MoyinCreateCharacter": MoyinCreateCharacter,
